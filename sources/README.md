@@ -12,7 +12,7 @@ Modify the JBoss configuration in `standalone/configuration/standalone.xml` like
 <pre>
 &lt;subsystem xmlns="urn:jboss:domain:logging:1.1"&gt;
     ...
-    &lt;custom-handler name="INSIGHT" class="org.fusesource.insight.log.jboss.InsightLogHandler" module="org.fusesource.insight-log-jboss"&gt;
+    &lt;custom-handler name="INSIGHT" class="org.fusesource.insight.log.jboss.InsightLogHandler" module="org.fusesource.insight.log"&gt;
         &lt;level name="INFO"/&gt;
     &lt;/custom-handler&gt;
     ...

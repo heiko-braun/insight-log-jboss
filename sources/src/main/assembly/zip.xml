@@ -16,7 +16,7 @@
   <files>
     <file>
       <source>target/${project.build.finalName}.jar</source>
-      <outputDirectory>/org/fusesource/insight/insight-log-jboss/main</outputDirectory>
+      <outputDirectory>/org/fusesource/insight/log/main</outputDirectory>
     </file>
   </files>
 </assembly>
