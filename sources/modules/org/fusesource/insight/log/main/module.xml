@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.1" name="org.fusesource.insight.log">
+    <resources>
+        <resource-root path="${project.build.finalName}.jar"/>
+        <resource-root path="insight-log-core-7.2.0.redhat-024.jar" />
+        <resource-root path="insight-log4j-7.2.0.redhat-024.jar" />
+    </resources>
+    <dependencies>
+        <module name="javax.api"/>    
+        <module name="org.slf4j"/>    
+        <module name="org.jboss.logmanager"/>    
+        <module name="org.codehaus.jackson.jackson-mapper-asl"/>    
+    </dependencies>
+</module>
