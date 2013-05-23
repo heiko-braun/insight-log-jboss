@@ -2,17 +2,11 @@
 <module xmlns="urn:jboss:module:1.1" name="org.fusesource.insight.log">
     <resources>
         <resource-root path="${project.build.finalName}.jar"/>
-        <resource-root path="insight-log-core-7.2.0.redhat-024.jar" />
-        <resource-root path="insight-log4j-7.2.0.redhat-024.jar" />
-        <resource-root path="ops4j-base-lang-1.3.0.jar" />
-        <resource-root path="ops4j-base-util-property-1.3.0.jar" />
-        <resource-root path="pax-url-maven-commons-1.5.2.jar" />
     </resources>
     <dependencies>
         <module name="javax.api"/>    
         <module name="org.slf4j"/>
         <module name="org.apache.log4j"/>
         <module name="org.jboss.logmanager"/>    
-        <module name="org.codehaus.jackson.jackson-mapper-asl"/>    
     </dependencies>
 </module>

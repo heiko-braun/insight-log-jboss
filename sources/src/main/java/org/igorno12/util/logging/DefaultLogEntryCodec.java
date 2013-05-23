@@ -1,5 +1,8 @@
 package org.igorno12.util.logging;
 
+import org.apache.log4j.spi.LocationInfo;
+import org.apache.log4j.spi.ThrowableInformation;
+
 /**
  * Default implementation of a log entry codec
  *
@@ -140,9 +143,13 @@ public final class DefaultLogEntryCodec implements LogEntryCodec {
 				.getLevel());
 		final String message = formatter.format(logRecord);
 		final Throwable throwable = logRecord.getThrown();
+		final ThrowableInformation throwableInfo = throwable != null ? new ThrowableInformation(throwable, logger) : null;
+		final LocationInfo location = throwable != null ? new LocationInfo(throwable, fqnOfCategoryClass) :
+			new LocationInfo(new Throwable(), fqnOfCategoryClass);
+		
 		final org.apache.log4j.spi.LoggingEvent loggingEvent = new org.apache.log4j.spi.LoggingEvent(
-				fqnOfCategoryClass, logger, timeStamp, level, message,
-				throwable);
+				fqnOfCategoryClass, logger, timeStamp, level, message, Thread.currentThread().getName(),
+				throwableInfo, null, location, null);
 		return loggingEvent;
 	}
 

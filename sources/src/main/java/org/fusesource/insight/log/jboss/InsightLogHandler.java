@@ -40,7 +40,6 @@ import java.util.logging.LogRecord;
 
 import javax.management.InstanceNotFoundException;
 import javax.management.MBeanException;
-import javax.management.MBeanServer;
 import javax.management.ObjectName;
 import javax.management.ReflectionException;
 
@@ -52,7 +51,6 @@ import org.jboss.logmanager.formatters.PatternFormatter;
 
 public class InsightLogHandler extends Handler {
     private final ObjectName objectName;
-    private final MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
     private final Formatter formatter = new PatternFormatter("%d{HH:mm:ss,SSS} %-5p [%c] (%t) %s%E%n");
 	private final Logger delegate = Logger.getRootLogger();
 	private final LogEntryCodec entryCodec = new DefaultLogEntryCodec();
@@ -62,10 +60,9 @@ public class InsightLogHandler extends Handler {
 
         // register MBean
         try {
-        	objectName = new ObjectName("org.fusesource.insight:name=JBossLogQuery");
-            platformMBeanServer.registerMBean(new JBossLogQuery(), objectName);
+        	objectName = new ObjectName("org.fusesource.insight:type=LogQuery");
         } catch (Exception e) {
-            throw new IllegalStateException("Problem during registration of MBean." + e);
+            throw new IllegalStateException("Problem creating object name.", e);
         }
     }
 
@@ -84,9 +81,10 @@ public class InsightLogHandler extends Handler {
     public void publish(LogRecord record) {
         try {
             log(record);
+        } catch (InstanceNotFoundException e) {
+            // waiting for the instance to be installed	
         } catch (Exception e) {
-            System.out.println(e);
-            throw new IllegalStateException("Can't invoke JBossLogQuery MBean", e);
+            throw new IllegalStateException("Can't invoke LogQuery MBean", e);
         }
     }
 
@@ -97,11 +95,6 @@ public class InsightLogHandler extends Handler {
      */
     @Override
     public void close() {
-        try {
-            platformMBeanServer.unregisterMBean(objectName);
-        } catch (Exception e) {
-            throw new IllegalStateException("Problem during unregistration of MBean." + e);
-        }
     }
 
     /*
